@@ -5,6 +5,7 @@ import com.songsociety.domain.User;
 import com.songsociety.repository.UserRepository;
 import com.songsociety.security.AuthoritiesConstants;
 import com.songsociety.service.MailService;
+import com.songsociety.service.PosterService;
 import com.songsociety.service.UserService;
 import com.songsociety.service.dto.AdminUserDTO;
 import com.songsociety.web.rest.errors.BadRequestAlertException;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -83,6 +85,9 @@ public class UserResource {
 
     private final UserService userService;
 
+    @Autowired
+    private PosterService posterService;
+
     private final UserRepository userRepository;
 
     private final MailService mailService;
@@ -119,12 +124,11 @@ public class UserResource {
             throw new EmailAlreadyUsedException();
         } else {
             User newUser = userService.createUser(userDTO);
+            posterService.createPosterForUser(newUser);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
-                .headers(
-                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
-                )
+                .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
                 .body(newUser);
         }
     }
@@ -153,7 +157,7 @@ public class UserResource {
 
         return ResponseUtil.wrapOrNotFound(
             updatedUser,
-            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
+            HeaderUtil.createAlert(applicationName, "userManagement.updated", userDTO.getLogin())
         );
     }
 
@@ -204,9 +208,6 @@ public class UserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createAlert(applicationName, "A user is deleted with identifier " + login, login))
-            .build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build();
     }
 }

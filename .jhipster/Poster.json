@@ -1,0 +1,60 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20221227162703",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "poster",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "societyTag",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "profilePicture",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Poster",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "poster",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "spotifyAccount",
+      "otherEntityRelationshipName": "poster",
+      "ownerSide": true,
+      "relationshipName": "spotifyAccount",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "profile",
+      "otherEntityRelationshipName": "poster",
+      "ownerSide": false,
+      "relationshipName": "profile",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "like",
+      "otherEntityRelationshipName": "poster",
+      "ownerSide": false,
+      "relationshipName": "like",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

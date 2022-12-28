@@ -1,0 +1,25 @@
+{
+  "songSocietyApp": {
+    "spotifyAccount": {
+      "home": {
+        "title": "Spotify Accounts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Spotify Account",
+        "createOrEditLabel": "Create or edit a Spotify Account",
+        "notFound": "No Spotify Accounts found"
+      },
+      "created": "A new Spotify Account is created with identifier {{ param }}",
+      "updated": "A Spotify Account is updated with identifier {{ param }}",
+      "deleted": "A Spotify Account is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Spotify Account {{ id }}?"
+      },
+      "detail": {
+        "title": "Spotify Account"
+      },
+      "id": "ID",
+      "spotifyId": "Spotify Id",
+      "poster": "Poster"
+    }
+  }
+}

@@ -1,0 +1,121 @@
+<div>
+  <h2 id="page-heading" data-cy="PosterHeading">
+    <span jhiTranslate="songSocietyApp.poster.home.title">Posters</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="songSocietyApp.poster.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-poster"
+        [routerLink]="['/poster/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="songSocietyApp.poster.home.createLabel"> Create a new Poster </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="posters?.length === 0">
+    <span jhiTranslate="songSocietyApp.poster.home.notFound">No Posters found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="posters && posters.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span jhiTranslate="songSocietyApp.poster.name">Name</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="societyTag">
+            <div class="d-flex">
+              <span jhiTranslate="songSocietyApp.poster.societyTag">Society Tag</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="profilePicture">
+            <div class="d-flex">
+              <span jhiTranslate="songSocietyApp.poster.profilePicture">Profile Picture</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="user.id">
+            <div class="d-flex">
+              <span jhiTranslate="songSocietyApp.poster.user">User</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="spotifyAccount.id">
+            <div class="d-flex">
+              <span jhiTranslate="songSocietyApp.poster.spotifyAccount">Spotify Account</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let poster of posters; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/poster', poster.id, 'view']">{{ poster.id }}</a>
+          </td>
+          <td>{{ poster.name }}</td>
+          <td>{{ poster.societyTag }}</td>
+          <td>
+            <a *ngIf="poster.profilePicture" (click)="openFile(poster.profilePicture, poster.profilePictureContentType)">
+              <img
+                [src]="'data:' + poster.profilePictureContentType + ';base64,' + poster.profilePicture"
+                style="max-height: 30px"
+                alt="poster image"
+              />
+            </a>
+            <span *ngIf="poster.profilePicture">{{ poster.profilePictureContentType }}, {{ byteSize(poster.profilePicture) }}</span>
+          </td>
+          <td>
+            {{ poster.user?.id }}
+          </td>
+          <td>
+            <div *ngIf="poster.spotifyAccount">
+              <a [routerLink]="['/spotify-account', poster.spotifyAccount.id, 'view']">{{ poster.spotifyAccount.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/poster', poster.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/poster', poster.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(poster)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

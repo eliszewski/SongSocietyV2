@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="profile">
+      <h2 data-cy="profileDetailsHeading"><span jhiTranslate="songSocietyApp.profile.detail.title">Profile</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ profile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.profile.aboutMe">About Me</span></dt>
+        <dd>
+          <span>{{ profile.aboutMe }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.profile.favoriteSong">Favorite Song</span></dt>
+        <dd>
+          <span>{{ profile.favoriteSong }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.profile.favoriteArtist">Favorite Artist</span></dt>
+        <dd>
+          <span>{{ profile.favoriteArtist }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.profile.favoriteAlbum">Favorite Album</span></dt>
+        <dd>
+          <span>{{ profile.favoriteAlbum }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.profile.poster">Poster</span></dt>
+        <dd>
+          <div *ngIf="profile.poster">
+            <a [routerLink]="['/poster', profile.poster.id, 'view']">{{ profile.poster.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/profile', profile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

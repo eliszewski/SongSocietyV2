@@ -1,0 +1,53 @@
+application {
+  config {
+    baseName SongSociety,
+    applicationType monolith,
+    packageName com.songsociety
+    authenticationType jwt,
+    prodDatabaseType mysql,
+    clientFramework angular
+  }
+  entities *
+}
+entity Poster{
+  name String required
+  societyTag String required unique
+  profilePicture ImageBlob
+}
+entity Profile{
+	aboutMe TextBlob
+	favoriteSong String
+    favoriteArtist String
+    favoriteAlbum String
+}
+entity Like{
+
+}
+entity SpotifyAccount{
+	spotifyId String unique
+}
+entity Post{
+  date ZonedDateTime required 
+  content TextBlob required
+  
+}
+entity Reply {
+	content TextBlob
+}
+
+relationship ManyToOne{
+   Post{postAuthor} to Poster
+   Like{post} to Post
+   Reply to Post
+}
+relationship OneToOne{
+  Poster{user} to User{poster}
+  Poster to SpotifyAccount 
+  Profile to Poster
+  Like to Poster
+  Reply{author} to Poster
+}
+dto * with mapstruct
+service * with serviceClass
+paginate Profile with infinite-scroll
+paginate Post with infinite-scroll 

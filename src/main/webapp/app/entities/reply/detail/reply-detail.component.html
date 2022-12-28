@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="reply">
+      <h2 data-cy="replyDetailsHeading"><span jhiTranslate="songSocietyApp.reply.detail.title">Reply</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ reply.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.reply.content">Content</span></dt>
+        <dd>
+          <span>{{ reply.content }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.reply.author">Author</span></dt>
+        <dd>
+          <div *ngIf="reply.author">
+            <a [routerLink]="['/poster', reply.author.id, 'view']">{{ reply.author.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.reply.post">Post</span></dt>
+        <dd>
+          <div *ngIf="reply.post">
+            <a [routerLink]="['/post', reply.post.id, 'view']">{{ reply.post.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/reply', reply.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

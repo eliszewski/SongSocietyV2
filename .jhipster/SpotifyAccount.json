@@ -1,0 +1,29 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20221227162706",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "spotify_account",
+  "fields": [
+    {
+      "fieldName": "spotifyId",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SpotifyAccount",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "poster",
+      "otherEntityRelationshipName": "spotifyAccount",
+      "ownerSide": false,
+      "relationshipName": "poster",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

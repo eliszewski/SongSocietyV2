@@ -1,0 +1,41 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20221227162704",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "profile",
+  "fields": [
+    {
+      "fieldName": "aboutMe",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "favoriteSong",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "favoriteArtist",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "favoriteAlbum",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Profile",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "poster",
+      "otherEntityRelationshipName": "profile",
+      "ownerSide": true,
+      "relationshipName": "poster",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

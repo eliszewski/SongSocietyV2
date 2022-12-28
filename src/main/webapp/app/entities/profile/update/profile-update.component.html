@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-profile-heading" data-cy="ProfileCreateUpdateHeading" jhiTranslate="songSocietyApp.profile.home.createOrEditLabel">
+        Create or edit a Profile
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="songSocietyApp.profile.aboutMe" for="field_aboutMe">About Me</label>
+          <textarea class="form-control" name="aboutMe" id="field_aboutMe" data-cy="aboutMe" formControlName="aboutMe"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="songSocietyApp.profile.favoriteSong" for="field_favoriteSong">Favorite Song</label>
+          <input
+            type="text"
+            class="form-control"
+            name="favoriteSong"
+            id="field_favoriteSong"
+            data-cy="favoriteSong"
+            formControlName="favoriteSong"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="songSocietyApp.profile.favoriteArtist" for="field_favoriteArtist">Favorite Artist</label>
+          <input
+            type="text"
+            class="form-control"
+            name="favoriteArtist"
+            id="field_favoriteArtist"
+            data-cy="favoriteArtist"
+            formControlName="favoriteArtist"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="songSocietyApp.profile.favoriteAlbum" for="field_favoriteAlbum">Favorite Album</label>
+          <input
+            type="text"
+            class="form-control"
+            name="favoriteAlbum"
+            id="field_favoriteAlbum"
+            data-cy="favoriteAlbum"
+            formControlName="favoriteAlbum"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="songSocietyApp.profile.poster" for="field_poster">Poster</label>
+          <select
+            class="form-control"
+            id="field_poster"
+            data-cy="poster"
+            name="poster"
+            formControlName="poster"
+            [compareWith]="comparePoster"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="posterOption" *ngFor="let posterOption of postersCollection">{{ posterOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

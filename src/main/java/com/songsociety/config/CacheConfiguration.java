@@ -48,6 +48,13 @@ public class CacheConfiguration {
             createCache(cm, com.songsociety.domain.User.class.getName());
             createCache(cm, com.songsociety.domain.Authority.class.getName());
             createCache(cm, com.songsociety.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.songsociety.domain.Poster.class.getName());
+            createCache(cm, com.songsociety.domain.Profile.class.getName());
+            createCache(cm, com.songsociety.domain.Like.class.getName());
+            createCache(cm, com.songsociety.domain.SpotifyAccount.class.getName());
+            createCache(cm, com.songsociety.domain.Post.class.getName());
+            createCache(cm, com.songsociety.domain.Post.class.getName() + ".replies");
+            createCache(cm, com.songsociety.domain.Reply.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

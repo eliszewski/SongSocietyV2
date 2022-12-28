@@ -1,0 +1,34 @@
+{
+  "applications": ["SongSociety"],
+  "changelogDate": "20221227162708",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "reply",
+  "fields": [
+    {
+      "fieldName": "content",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Reply",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "poster",
+      "ownerSide": true,
+      "relationshipName": "author",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "reply",
+      "relationshipName": "post",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}
