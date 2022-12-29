@@ -1,5 +1,6 @@
 package com.songsociety.web.rest;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.songsociety.domain.Post;
 import com.songsociety.domain.Poster;
 import com.songsociety.repository.PostRepository;
@@ -151,6 +152,7 @@ public class PostResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of posts in body.
      */
+    @JsonIgnoreProperties("")
     @GetMapping("/posts")
     public ResponseEntity<List<PostDTO>> getAllPosts(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Posts");
@@ -165,6 +167,7 @@ public class PostResource {
      * @param id the id of the postDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the postDTO, or with status {@code 404 (Not Found)}.
      */
+    @JsonIgnoreProperties("")
     @GetMapping("/posts/{id}")
     public ResponseEntity<PostDTO> getPost(@PathVariable Long id) {
         log.debug("REST request to get Post : {}", id);

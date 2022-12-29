@@ -34,8 +34,9 @@ public class Post implements Serializable {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "spotifyAccount", "profile", "like" }, allowSetters = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_author_id")
+    // @JsonIgnoreProperties(value = { "user", "spotifyAccount", "profile", "like" }, allowSetters = true)
     private Poster postAuthor;
 
     @OneToMany(mappedBy = "post")

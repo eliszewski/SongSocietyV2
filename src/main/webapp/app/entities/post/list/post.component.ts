@@ -18,17 +18,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Pipe, PipeTransform } from '@angular/core';
 import { LinkyModule } from 'ngx-linky';
 
-// @NgModule({
-//   imports: [
-//     LinkyModule~
-//   ]
-// })
-// export class MyModule { }
-interface Section {
-  text: string;
-  url?: string;
-}
-
 @Component({
   selector: 'jhi-post',
   templateUrl: './post.component.html',
@@ -73,49 +62,6 @@ export class PostComponent implements OnInit {
   }
   getPostAuthorSocietyTag(postId: number): Observable<string> {
     return this.http.get(`/api/posts/${postId}/post-author-tag`, { responseType: 'text' });
-  }
-
-  isUrl(string: string): boolean {
-    const pattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
-    return pattern.test(string);
-  }
-
-  splitContentIntoSections(content: string): Section[] {
-    let sections: Section[] = [];
-    let currentSection: Section = { text: '' };
-    let currentChar: string;
-    let currentUrl: string = '';
-    let insideUrl: boolean = false;
-
-    for (let i = 0; i < content.length; i++) {
-      currentChar = content.charAt(i);
-      if (currentChar === ' ' || currentChar === '\n') {
-        if (insideUrl) {
-          // End of URL
-          currentSection.url = currentUrl;
-          sections.push(currentSection);
-          currentUrl = '';
-          currentSection = { text: '' };
-          insideUrl = false;
-        } else {
-          currentSection.text += currentChar;
-        }
-      } else if (currentChar === 'h' && content.substring(i, i + 4) === 'http') {
-        // Start of URL
-        insideUrl = true;
-        currentUrl += currentChar;
-      } else if (insideUrl) {
-        currentUrl += currentChar;
-      } else {
-        currentSection.text += currentChar;
-      }
-    }
-
-    if (currentSection.text !== '') {
-      sections.push(currentSection);
-    }
-
-    return sections;
   }
 
   getContentAsHtml(content: string): SafeHtml {

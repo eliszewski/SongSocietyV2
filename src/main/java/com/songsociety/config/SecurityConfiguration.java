@@ -85,7 +85,9 @@ public class SecurityConfiguration {
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/**").authenticated()
+            // .antMatchers("/api/**").authenticated()
+            // DONT LAUNCH THIS FIX THIS BEFORE LAUNCHING
+            .antMatchers("/api/**").permitAll()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()

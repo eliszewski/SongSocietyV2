@@ -20,7 +20,7 @@
         </dd>
         <dt><span jhiTranslate="songSocietyApp.post.content">Content</span></dt>
         <dd>
-          <span>{{ post.content }}</span>
+          <span [innerHTML]="post.content! | linky"></span>
         </dd>
         <dt><span jhiTranslate="songSocietyApp.post.postAuthor">Post Author</span></dt>
         <dd>

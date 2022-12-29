@@ -1,0 +1,42 @@
+<div class="twitter-feed">
+  <header>
+    <h1>Twitter Feed</h1>
+  </header>
+  <main>
+    <div class="create-post-container">
+      <button class="create-post-button" [routerLink]="['/post/new']">Create a new Post</button>
+    </div>
+    <div class="alert alert-warning" id="no-result" *ngIf="posts?.length === 0">
+      <span jhiTranslate="songSocietyApp.post.home.notFound">No Posts found</span>
+    </div>
+    <div class="post-container" *ngFor="let post of posts; trackBy: trackId">
+      <div class="post-header">
+        <div class="avatar-container">
+          <img src="path/to/avatar.png" alt="Avatar" class="avatar" />
+        </div>
+        <div class="username-container">
+          <a [routerLink]="['/poster', post.postAuthor.id, 'view']">{{ post.postAuthor.id }}</a>
+        </div>
+        <div class="date-container">
+          {{ post.date | formatMediumDatetime }}
+        </div>
+      </div>
+      <div class="post-content">
+        {{ post.content }}
+      </div>
+      <div class="post-actions">
+        <button class="like-button">
+          <fa-icon icon="thumbs-up"></fa-icon>
+          Like
+        </button>
+        <button class="comment-button">
+          <fa-icon icon="comment"></fa-icon>
+          Comment
+        </button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>Copyright 2021 Twitter Feed</p>
+  </footer>
+</div>
