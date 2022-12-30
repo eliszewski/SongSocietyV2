@@ -58,10 +58,58 @@ export class PostComponent implements OnInit {
   trackId = (_index: number, item: IPost): number => this.postService.getPostIdentifier(item);
 
   ngOnInit(): void {
+    //  // Get the list of posts from the API
+    //  this.postService.query().subscribe((res: any) => {
+    //   // Store the list of posts in a local variable
+    //   this.posts = res.body || [];
+
+    //   // For each post in the list, retrieve the societyTag value and store it in the societyTag field
+    //   if(this.posts)
+    //   this.posts.forEach(async (post) => {
+    //     if (post.postAuthor && post.postAuthor.id) {
+    //       post.societyTag = await this.getSocietyTag(post.postAuthor.id);
+    //     }
+    //   });
+    // });
     this.load();
   }
-  getPostAuthorSocietyTag(postId: number): Observable<string> {
-    return this.http.get(`/api/posts/${postId}/post-author-tag`, { responseType: 'text' });
+  // getPostAuthorSocietyTag(posterId: number): Observable<Object> {
+  //   let tag = this.http.get(`/api/posters/${posterId}`, { responseType: 'json' });
+  //   console.log(tag.);
+  //   return tag;
+  //
+
+  // async getSocietyTag(posterId: number): Promise<string> {
+  //   return await this.postService.getSocietyTag(posterId);
+  // }
+  // getSocietyTag(id: number): string {
+  //   return this.societyTags[id] || '';
+  // }
+
+  // async getSocietyTag(id: number): Promise<string> {
+  //   if (!this.societyTags[id]) {
+  //     this.societyTags[id] = await this.postService.getSocietyTag(id);
+  //   }
+  //   return this.societyTags[id];
+  // }
+  async getSocietyTag(posterId: number): Promise<string> {
+    try {
+      // Make a GET request to the API endpoint to retrieve the poster object for the given poster ID
+      const response = await this.http.get<any>(`/api/posters/${posterId}`).toPromise();
+      // Return the societyTag value from the response
+      return response.societyTag;
+    } catch (error) {
+      console.error(error);
+      return '';
+    }
+  }
+
+  populateSocietyTags(posts: IPost[]): void {
+    posts.forEach(async post => {
+      if (post.postAuthor && post.postAuthor.id) {
+        post.societyTag = await this.getSocietyTag(post.postAuthor.id);
+      }
+    });
   }
 
   getContentAsHtml(content: string): SafeHtml {
@@ -125,6 +173,7 @@ export class PostComponent implements OnInit {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.posts = dataFromBody;
+    this.populateSocietyTags(this.posts);
   }
 
   protected fillComponentAttributesFromResponseBody(data: IPost[] | null): IPost[] {

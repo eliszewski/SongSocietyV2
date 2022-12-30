@@ -27,6 +27,7 @@ export type EntityArrayResponseType = HttpResponse<IPost[]>;
 @Injectable({ providedIn: 'root' })
 export class PostService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/posts');
+  societyTags: { [id: number]: string } = {};
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -69,10 +70,24 @@ export class PostService {
   getPostIdentifier(post: Pick<IPost, 'id'>): number {
     return post.id;
   }
-  //   getPostAuthorSocietyTag(post: number): Observable<string> {
-  //     return this.http.get<string>(`/api/posts/${post}/post-author-tag`, {responseType: 'text'
-  //     });
-  //     }
+  // async getSocietyTag(posterId: number): Promise<string>{
+  //     const response = await this.http.get<any>(`/api/posters/${posterId}`).toPromise();
+  //     console.log(response.societyTag);
+  //     return response.societyTag;
+  // }
+  async getSocietyTag(id: number): Promise<string> {
+    if (this.societyTags[id]) {
+      return this.societyTags[id];
+    }
+    try {
+      const response = await this.http.get<{ societyTag: string }>(`/api/posters/${id}`).toPromise();
+      this.societyTags[id] = (response && response.societyTag) || '';
+      return this.societyTags[id];
+    } catch (error) {
+      console.error(error);
+    }
+    return '';
+  }
 
   comparePost(o1: Pick<IPost, 'id'> | null, o2: Pick<IPost, 'id'> | null): boolean {
     return o1 && o2 ? this.getPostIdentifier(o1) === this.getPostIdentifier(o2) : o1 === o2;

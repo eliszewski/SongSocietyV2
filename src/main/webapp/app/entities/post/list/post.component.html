@@ -71,14 +71,14 @@
           </td>
           <td>{{ post.date | formatMediumDatetime }}</td>
           <td>
-            <div *ngIf="post.postAuthor">
+            <!-- <div *ngIf="post.postAuthor">
               <a [routerLink]="['/poster', post.postAuthor.id, 'view']">{{ post.postAuthor.id }}</a>
+            </div> -->
+            <div *ngIf="post.postAuthor">
+              <a [routerLink]="['/poster', post.postAuthor.id, 'view']">
+                {{ post.societyTag }}
+              </a>
             </div>
-            <!--            <div *ngIf="post.postAuthor">-->
-            <!--              <a [routerLink]="['/poster', post.postAuthor.id, 'view']">-->
-            <!--                {{ (getPostAuthorSocietyTag(post.id) | async)}}-->
-            <!--              </a>-->
-            <!--            </div>-->
           </td>
           <td>
             <span [innerHTML]="post.content! | linky"></span>
