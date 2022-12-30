@@ -9,6 +9,7 @@ import { IPost } from '../post.model';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, PostService } from '../service/post.service';
+import { LikeService } from 'app/entities/like/service/like.service';
 import { PostDeleteDialogComponent } from '../delete/post-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { ParseLinks } from 'app/core/util/parse-links.service';
@@ -17,6 +18,7 @@ import { of } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Pipe, PipeTransform } from '@angular/core';
 import { LinkyModule } from 'ngx-linky';
+import { NewLike } from 'app/entities/like/like.model';
 
 @Component({
   selector: 'jhi-post',
@@ -35,6 +37,7 @@ export class PostComponent implements OnInit {
 
   constructor(
     protected postService: PostService,
+    protected likeService: LikeService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected parseLinks: ParseLinks,
@@ -58,58 +61,31 @@ export class PostComponent implements OnInit {
   trackId = (_index: number, item: IPost): number => this.postService.getPostIdentifier(item);
 
   ngOnInit(): void {
-    //  // Get the list of posts from the API
-    //  this.postService.query().subscribe((res: any) => {
-    //   // Store the list of posts in a local variable
-    //   this.posts = res.body || [];
-
-    //   // For each post in the list, retrieve the societyTag value and store it in the societyTag field
-    //   if(this.posts)
-    //   this.posts.forEach(async (post) => {
-    //     if (post.postAuthor && post.postAuthor.id) {
-    //       post.societyTag = await this.getSocietyTag(post.postAuthor.id);
-    //     }
-    //   });
-    // });
     this.load();
-  }
-  // getPostAuthorSocietyTag(posterId: number): Observable<Object> {
-  //   let tag = this.http.get(`/api/posters/${posterId}`, { responseType: 'json' });
-  //   console.log(tag.);
-  //   return tag;
-  //
-
-  // async getSocietyTag(posterId: number): Promise<string> {
-  //   return await this.postService.getSocietyTag(posterId);
-  // }
-  // getSocietyTag(id: number): string {
-  //   return this.societyTags[id] || '';
-  // }
-
-  // async getSocietyTag(id: number): Promise<string> {
-  //   if (!this.societyTags[id]) {
-  //     this.societyTags[id] = await this.postService.getSocietyTag(id);
-  //   }
-  //   return this.societyTags[id];
-  // }
-  async getSocietyTag(posterId: number): Promise<string> {
-    try {
-      // Make a GET request to the API endpoint to retrieve the poster object for the given poster ID
-      const response = await this.http.get<any>(`/api/posters/${posterId}`).toPromise();
-      // Return the societyTag value from the response
-      return response.societyTag;
-    } catch (error) {
-      console.error(error);
-      return '';
-    }
   }
 
   populateSocietyTags(posts: IPost[]): void {
     posts.forEach(async post => {
       if (post.postAuthor && post.postAuthor.id) {
-        post.societyTag = await this.getSocietyTag(post.postAuthor.id);
+        post.societyTag = await this.postService.getSocietyTag(post.postAuthor.id);
       }
     });
+  }
+  createLike(postId: number) {
+    const like: NewLike = {
+      id: null,
+      poster: null,
+      post: { id: postId },
+    };
+
+    this.likeService.createLikeForPost(like).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   getContentAsHtml(content: string): SafeHtml {

@@ -70,23 +70,16 @@ export class PostService {
   getPostIdentifier(post: Pick<IPost, 'id'>): number {
     return post.id;
   }
-  // async getSocietyTag(posterId: number): Promise<string>{
-  //     const response = await this.http.get<any>(`/api/posters/${posterId}`).toPromise();
-  //     console.log(response.societyTag);
-  //     return response.societyTag;
-  // }
-  async getSocietyTag(id: number): Promise<string> {
-    if (this.societyTags[id]) {
-      return this.societyTags[id];
-    }
+  async getSocietyTag(posterId: number): Promise<string> {
     try {
-      const response = await this.http.get<{ societyTag: string }>(`/api/posters/${id}`).toPromise();
-      this.societyTags[id] = (response && response.societyTag) || '';
-      return this.societyTags[id];
+      // Make a GET request to the API endpoint to retrieve the poster object for the given poster ID
+      const response = await this.http.get<any>(`/api/posters/${posterId}`).toPromise();
+      // Return the societyTag value from the response
+      return response.societyTag;
     } catch (error) {
       console.error(error);
+      return '';
     }
-    return '';
   }
 
   comparePost(o1: Pick<IPost, 'id'> | null, o2: Pick<IPost, 'id'> | null): boolean {

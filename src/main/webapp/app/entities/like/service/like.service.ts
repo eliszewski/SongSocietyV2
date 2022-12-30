@@ -6,6 +6,9 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ILike, NewLike } from '../like.model';
+import { IPost, NewPost } from 'app/entities/post/post.model';
+
+import { FormGroup } from '@angular/forms';
 
 export type PartialUpdateLike = Partial<ILike> & Pick<ILike, 'id'>;
 
@@ -19,6 +22,9 @@ export class LikeService {
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(like: NewLike): Observable<EntityResponseType> {
+    return this.http.post<ILike>(this.resourceUrl, like, { observe: 'response' });
+  }
+  createLikeForPost(like: NewLike): Observable<EntityResponseType> {
     return this.http.post<ILike>(this.resourceUrl, like, { observe: 'response' });
   }
 

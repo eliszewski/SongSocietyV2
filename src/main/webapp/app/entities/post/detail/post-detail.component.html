@@ -10,10 +10,10 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <!-- <dt><span *jhiHasAnyAuthority="'ROLE_ADMIN'" jhiTranslate="global.field.id">ID</span></dt>
         <dd>
           <span>{{ post.id }}</span>
-        </dd>
+        </dd> -->
         <dt><span jhiTranslate="songSocietyApp.post.date">Date</span></dt>
         <dd>
           <span>{{ post.date | formatMediumDatetime }}</span>
@@ -25,7 +25,15 @@
         <dt><span jhiTranslate="songSocietyApp.post.postAuthor">Post Author</span></dt>
         <dd>
           <div *ngIf="post.postAuthor">
-            <a [routerLink]="['/poster', post.postAuthor.id, 'view']">{{ post.postAuthor.id }}</a>
+            <a [routerLink]="['/poster', post.postAuthor.id, 'view']">{{ post.societyTag }}</a>
+          </div>
+        </dd>
+        <dt><span>Like this post:</span></dt>
+        <dd>
+          <div>
+            <button class="btn btn-danger btn-sm" (click)="createLike(post.id)">
+              <fa-icon icon="heart"></fa-icon>
+            </button>
           </div>
         </dd>
       </dl>
@@ -34,7 +42,7 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/post', post.id, 'edit']" class="btn btn-primary">
+      <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/post', post.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

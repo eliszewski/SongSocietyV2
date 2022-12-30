@@ -3,7 +3,7 @@ import { IPost } from 'app/entities/post/post.model';
 
 export interface ILike {
   id: number;
-  poster?: Pick<IPoster, 'id'> | null;
+  poster?: Pick<IPoster, 'id' | 'societyTag'> | null;
   post?: Pick<IPost, 'id'> | null;
 }
 
