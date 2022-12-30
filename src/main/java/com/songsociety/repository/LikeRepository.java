@@ -2,6 +2,7 @@ package com.songsociety.repository;
 
 import com.songsociety.domain.Like;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface LikeRepository extends JpaRepository<Like, Long> {}
+public interface LikeRepository extends JpaRepository<Like, Long> {
+    @Query("SELECT COUNT(l) FROM Like l WHERE l.post.id = :postId")
+    long countLikesByPostId(@Param("postId") long postId);
+}

@@ -8,6 +8,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IPost, NewPost } from '../post.model';
+import { ILike } from 'app/entities/like/like.model';
 
 export type PartialUpdatePost = Partial<IPost> & Pick<IPost, 'id'>;
 
@@ -80,6 +81,9 @@ export class PostService {
       console.error(error);
       return '';
     }
+  }
+  queryLikesByPostId(postId: number): Observable<number> {
+    return this.query({ 'post.id.equals': postId }).pipe(map(res => (res && res.body ? res.body.length : 0)));
   }
 
   comparePost(o1: Pick<IPost, 'id'> | null, o2: Pick<IPost, 'id'> | null): boolean {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -43,6 +43,10 @@ export class LikeService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ILike[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  getLikeCountByPostId(postId: number): Observable<number> {
+    return this.http.get<number>(`${this.resourceUrl}/count?postId=${postId}`);
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

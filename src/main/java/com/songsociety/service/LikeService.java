@@ -100,6 +100,10 @@ public class LikeService {
         return likeRepository.findById(id).map(likeMapper::toDto);
     }
 
+    public long countLikesByPostId(long postId) {
+        return likeRepository.countLikesByPostId(postId);
+    }
+
     /**
      * Delete the like by id.
      *

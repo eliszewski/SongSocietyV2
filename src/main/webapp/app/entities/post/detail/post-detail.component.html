@@ -28,6 +28,10 @@
             <a [routerLink]="['/poster', post.postAuthor.id, 'view']">{{ post.societyTag }}</a>
           </div>
         </dd>
+        <dt><span>Likes:</span></dt>
+        <dd>
+          <span>{{ post.likeCount }}</span>
+        </dd>
         <dt><span>Like this post:</span></dt>
         <dd>
           <div>

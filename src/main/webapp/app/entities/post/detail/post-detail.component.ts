@@ -3,9 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 
 import { IPost } from '../post.model';
 import { DataUtils } from 'app/core/util/data-util.service';
-import { NewLike } from 'app/entities/like/like.model';
+import { ILike, NewLike } from 'app/entities/like/like.model';
 import { LikeService } from 'app/entities/like/service/like.service';
-import { PostService } from '../service/post.service';
+import { EntityArrayResponseType, PostService } from '../service/post.service';
+
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'jhi-post-detail',
@@ -26,6 +28,7 @@ export class PostDetailComponent implements OnInit {
       this.post = post;
     });
     this.findPostSocietyTag();
+    this.getLikeCount();
   }
 
   byteSize(base64String: string): string {
@@ -57,5 +60,12 @@ export class PostDetailComponent implements OnInit {
   }
   async findPostSocietyTag() {
     if (this.post && this.post.postAuthor) this.post.societyTag = await this.postService.getSocietyTag(this.post.postAuthor.id);
+  }
+
+  getLikeCount() {
+    if (this.post)
+      this.likeService.getLikeCountByPostId(this.post.id).subscribe(likeCount => {
+        if (this.post) this.post.likeCount = likeCount;
+      });
   }
 }

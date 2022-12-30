@@ -3,6 +3,7 @@ package com.songsociety.web.rest;
 import com.songsociety.repository.LikeRepository;
 import com.songsociety.service.LikeService;
 import com.songsociety.service.dto.LikeDTO;
+import com.songsociety.service.dto.PostDTO;
 import com.songsociety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -150,6 +151,11 @@ public class LikeResource {
         log.debug("REST request to get Like : {}", id);
         Optional<LikeDTO> likeDTO = likeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(likeDTO);
+    }
+
+    @GetMapping("/likes/count")
+    public ResponseEntity<Long> countLikesByPostId(@RequestParam Long postId) {
+        return ResponseEntity.ok(likeService.countLikesByPostId(postId));
     }
 
     /**

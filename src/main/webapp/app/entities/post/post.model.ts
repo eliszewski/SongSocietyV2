@@ -7,5 +7,6 @@ export interface IPost {
   content?: string | null;
   postAuthor?: Pick<IPoster, 'id'> | null;
   societyTag?: string;
+  likeCount?: number;
 }
 export type NewPost = Omit<IPost, 'id'> & { id: null };
