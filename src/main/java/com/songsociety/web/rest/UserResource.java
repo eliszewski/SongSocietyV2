@@ -125,7 +125,7 @@ public class UserResource {
         } else {
             User newUser = userService.createUser(userDTO);
             posterService.createPosterForUser(newUser);
-            mailService.sendCreationEmail(newUser);
+            // mailService.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
