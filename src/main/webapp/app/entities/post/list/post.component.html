@@ -75,7 +75,7 @@
               <a [routerLink]="['/poster', post.postAuthor.id, 'view']">{{ post.postAuthor.id }}</a>
             </div> -->
             <div *ngIf="post.postAuthor">
-              <a [routerLink]="['/poster', post.postAuthor.id, 'view']">
+              <a [routerLink]="['/poster', post.postAuthor.id, 'view']" style="text-decoration: none">
                 {{ post.societyTag }}
               </a>
             </div>
