@@ -6,7 +6,10 @@
 Bootstrap tweaks
 ===============================================================*/
 
-body,
+body {
+  margin: 0;
+  background: linear-gradient(to right, #d3f0fb, #19567a);
+}
 h1,
 h2,
 h3,
@@ -16,7 +19,7 @@ h4 {
 
 /* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
 a {
-  color: #533f03;
+  color: #000000;
   font-weight: bold;
 }
 
@@ -48,7 +51,7 @@ Browser Upgrade Prompt
 ========================================================================== */
 .browserupgrade {
   margin: 0.2em 0;
-  background: #ccc;
+  background: rgb(187, 184, 184);
   color: #000;
   padding: 0.2em 0;
 }
@@ -73,6 +76,7 @@ Generic styles
   padding: 1.5%;
   margin-top: 20px;
   border: none;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .error {
@@ -107,7 +111,7 @@ Generic styles
 }
 
 .footer {
-  border-top: 1px solid blue;
+  border-top: 2px solid rgb(0, 0, 0);
 }
 
 .hand,
