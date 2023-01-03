@@ -1,7 +1,9 @@
 package com.songsociety.web.rest;
 
+import com.songsociety.domain.User;
 import com.songsociety.repository.PosterRepository;
 import com.songsociety.service.PosterService;
+import com.songsociety.service.UserService;
 import com.songsociety.service.dto.PosterDTO;
 import com.songsociety.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -14,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +40,9 @@ public class PosterResource {
     private final PosterService posterService;
 
     private final PosterRepository posterRepository;
+
+    @Autowired
+    private UserService userService;
 
     public PosterResource(PosterService posterService, PosterRepository posterRepository) {
         this.posterService = posterService;
@@ -164,6 +170,13 @@ public class PosterResource {
     public ResponseEntity<PosterDTO> getPoster(@PathVariable Long id) {
         log.debug("REST request to get Poster : {}", id);
         Optional<PosterDTO> posterDTO = posterService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(posterDTO);
+    }
+
+    @GetMapping("/poste/user/{userId}")
+    public ResponseEntity<PosterDTO> findPosterByUserId(@PathVariable Long userId) {
+        User user = userService.findOne(userId);
+        Optional<PosterDTO> posterDTO = posterService.findOneByUser(user);
         return ResponseUtil.wrapOrNotFound(posterDTO);
     }
 

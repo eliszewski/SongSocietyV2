@@ -157,4 +157,9 @@ public class PosterService {
         profileService.createProfileForPoster(poster);
         posterRepository.save(poster);
     }
+
+    @Transactional(readOnly = true)
+    public Optional<PosterDTO> findOneByUser(User user) {
+        return posterRepository.findOneByUser(user);
+    }
 }
