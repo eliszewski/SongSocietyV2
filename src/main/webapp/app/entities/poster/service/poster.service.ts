@@ -70,4 +70,8 @@ export class PosterService {
     }
     return posterCollection;
   }
+
+  getPosterByUserId(userId: number): Observable<EntityResponseType> {
+    return this.http.get<IPoster>(`/api/posters/user/${userId}`, { observe: 'response' });
+  }
 }

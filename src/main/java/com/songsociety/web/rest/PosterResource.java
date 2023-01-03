@@ -173,7 +173,7 @@ public class PosterResource {
         return ResponseUtil.wrapOrNotFound(posterDTO);
     }
 
-    @GetMapping("/poste/user/{userId}")
+    @GetMapping("/posters/user/{userId}")
     public ResponseEntity<PosterDTO> findPosterByUserId(@PathVariable Long userId) {
         User user = userService.findOne(userId);
         Optional<PosterDTO> posterDTO = posterService.findOneByUser(user);

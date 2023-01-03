@@ -62,6 +62,7 @@ export class NavbarComponent implements OnInit {
       this.account = account;
     });
     this.getTheUserId();
+    this.getThePoster();
   }
 
   changeLanguage(languageKey: string): void {
@@ -93,5 +94,11 @@ export class NavbarComponent implements OnInit {
         this.userId = response.id;
       });
     return 0;
+  }
+  getThePoster(): void {
+    if (this.userId)
+      this.posterService.getPosterByUserId(this.userId).subscribe(response => {
+        this.loggedInPoster = response.body;
+      });
   }
 }
