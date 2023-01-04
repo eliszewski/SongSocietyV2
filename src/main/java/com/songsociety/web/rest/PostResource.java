@@ -175,6 +175,7 @@ public class PostResource {
         return ResponseUtil.wrapOrNotFound(postDTO);
     }
 
+    //added method
     @GetMapping("/posts/{id}/post-author-tag")
     public ResponseEntity<String> getPostAuthorTag(@PathVariable Long id) {
         return postService

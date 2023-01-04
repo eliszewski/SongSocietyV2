@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IPoster, NewPoster } from '../poster.model';
+import { IUser } from 'app/admin/user-management/user-management.model';
 
 export type PartialUpdatePoster = Partial<IPoster> & Pick<IPoster, 'id'>;
 
@@ -72,6 +73,6 @@ export class PosterService {
   }
 
   getPosterByUserId(userId: number): Observable<EntityResponseType> {
-    return this.http.get<IPoster>(`/api/posters/user/${userId}`, { observe: 'response' });
+    return this.http.get<IPoster>(`/api/posters/userPoster/${userId}`, { observe: 'response' });
   }
 }

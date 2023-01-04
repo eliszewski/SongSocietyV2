@@ -5,6 +5,7 @@ import com.songsociety.domain.User;
 import com.songsociety.service.dto.PosterDTO;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,5 +14,8 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface PosterRepository extends JpaRepository<Poster, Long> {
-    Optional<PosterDTO> findOneByUser(User user);
+    Optional<Poster> findOneByUser(User user);
+
+    @Query("SELECT p FROM Poster p WHERE p.user = :userId")
+    Optional<PosterDTO> findOneByUserId(@Param("userId") Long userId);
 }

@@ -8,6 +8,7 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { TestingComponent } from './testing/testing.component';
+import { MyprofileComponent } from './myprofile/myprofile.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,10 @@ import { TestingComponent } from './testing/testing.component';
         {
           path: 'test',
           component: TestingComponent,
+        },
+        {
+          path: 'my-profile',
+          component: MyprofileComponent,
         },
         navbarRoute,
         ...errorRoute,

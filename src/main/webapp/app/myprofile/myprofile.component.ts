@@ -1,3 +1,19 @@
+// import { Component, OnInit } from '@angular/core';
+
+// @Component({
+//   selector: 'jhi-myprofile',
+//   templateUrl: './myprofile.component.html',
+//   styleUrls: ['./myprofile.component.scss']
+// })
+// export class MyprofileComponent implements OnInit {
+
+//   constructor() { }
+
+//   ngOnInit(): void {
+
+//   }
+
+// }
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,17 +28,18 @@ import { IPoster } from 'app/entities/poster/poster.model';
 import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
-import { UserManagementService } from '../../admin/user-management/service/user-management.service';
-import { IUser } from '../../admin/user-management/user-management.model';
-import { UserService } from '../../entities/user/user.service';
+import { UserManagementService } from 'app/admin/user-management/service/user-management.service';
+import { IUser } from 'app/admin/user-management/user-management.model';
+import { UserService } from 'app/entities/user/user.service';
 import { User } from 'app/entities/user/user.model';
+import { DataUtils } from 'app/core/util/data-util.service';
 
 @Component({
-  selector: 'jhi-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  selector: 'jhi-profile-detail',
+  templateUrl: './myprofile.component.html',
+  // styleUrls: ['./myprofile.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class MyprofileComponent implements OnInit {
   loggedInPoster: IPoster | null = null;
   inProduction?: boolean;
   isNavbarCollapsed = true;
@@ -30,8 +47,8 @@ export class NavbarComponent implements OnInit {
   openAPIEnabled?: boolean;
   version = '';
   account: Account | null = null;
-  user: IUser | undefined;
-  userId: number | null = null;
+  user: IUser | null = null;
+  userId: number | null = 1;
   entitiesNavbarItems: any[] = [];
 
   constructor(
@@ -43,6 +60,7 @@ export class NavbarComponent implements OnInit {
     private posterService: PosterService,
     private userManagementService: UserManagementService,
     private UserService: UserService,
+    protected dataUtils: DataUtils,
 
     private router: Router
   ) {
@@ -64,8 +82,10 @@ export class NavbarComponent implements OnInit {
     this.accountService.identity().subscribe(account => {
       this.account = account;
     });
-    this.getTheUserId();
-    this.getThePoster();
+    console.log(this.user);
+    this.user = this.getTheUserId();
+    console.log(this.user);
+    if (this.user?.id) this.getThePoster(this.user.id);
   }
 
   changeLanguage(languageKey: string): void {
@@ -94,20 +114,32 @@ export class NavbarComponent implements OnInit {
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
-  getTheUserId(): number {
+  getTheUserId(): IUser | null {
     if (this.account?.login)
-      this.userManagementService.find(this.account?.login).subscribe(response => {
+      this.userManagementService.find('user').subscribe(response => {
         console.log(response);
-        this.userId = response.id;
+        return response;
       });
-    return 0;
+    return null;
   }
   //custom
-  getThePoster(): void {
-    if (this.userId)
-      this.posterService.getPosterByUserId(this.userId).subscribe(response => {
+  getThePoster(id: number): void {
+    const user = this.getTheUserId()?.id;
+    if (user)
+      this.posterService.getPosterByUserId(id).subscribe(response => {
         console.log(response);
         this.loggedInPoster = response.body;
       });
+  }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    this.dataUtils.openFile(base64String, contentType);
+  }
+
+  previousState(): void {
+    window.history.back();
   }
 }

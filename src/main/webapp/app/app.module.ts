@@ -26,6 +26,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { TestingComponent } from './testing/testing.component';
+import { MyprofileComponent } from './myprofile/myprofile.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,15 @@ import { TestingComponent } from './testing/testing.component';
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, ActiveMenuDirective, FooterComponent, TestingComponent],
+  declarations: [
+    MainComponent,
+    NavbarComponent,
+    ErrorComponent,
+    ActiveMenuDirective,
+    FooterComponent,
+    TestingComponent,
+    MyprofileComponent,
+  ],
   bootstrap: [MainComponent],
 })
 export class AppModule {

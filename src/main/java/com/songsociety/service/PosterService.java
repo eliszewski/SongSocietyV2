@@ -159,7 +159,12 @@ public class PosterService {
     }
 
     @Transactional(readOnly = true)
+    public Optional<PosterDTO> findOneByUserId(Long userId) {
+        return posterRepository.findOneByUserId(userId);
+    }
+
+    @Transactional(readOnly = true)
     public Optional<PosterDTO> findOneByUser(User user) {
-        return posterRepository.findOneByUser(user);
+        return posterRepository.findOneByUser(user).map(posterMapper::toDto);
     }
 }

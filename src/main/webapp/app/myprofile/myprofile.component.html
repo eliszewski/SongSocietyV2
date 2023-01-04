@@ -1,0 +1,60 @@
+<header>{{ user }}</header>
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="loggedInPoster">
+      <h2 data-cy="posterDetailsHeading"><span jhiTranslate="songSocietyApp.poster.detail.title">Poster</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ loggedInPoster.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.poster.name">Name</span></dt>
+        <dd>
+          <span>{{ loggedInPoster.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.poster.societyTag">Society Tag</span></dt>
+        <dd>
+          <span>{{ loggedInPoster.societyTag }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.poster.profilePicture">Profile Picture</span></dt>
+        <dd>
+          <div *ngIf="loggedInPoster.profilePicture">
+            <!-- <a (click)="openFile(poster.profilePicture, poster.profilePictureContentType)">
+                <img
+                  [src]="'data:' + poster.profilePictureContentType + ';base64,' + poster.profilePicture"
+                  style="max-width: 100%"
+                  alt="poster image"
+                />
+              </a> -->
+            {{ loggedInPoster.profilePictureContentType }}, {{ byteSize(loggedInPoster.profilePicture) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.poster.user">User</span></dt>
+        <dd>
+          <span>{{ loggedInPoster.user?.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="songSocietyApp.poster.spotifyAccount">Spotify Account</span></dt>
+        <dd>
+          <div *ngIf="loggedInPoster.spotifyAccount">
+            <a [routerLink]="['/spotify-account', loggedInPoster.spotifyAccount.id, 'view']">{{ loggedInPoster.spotifyAccount.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/poster', loggedInPoster.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
