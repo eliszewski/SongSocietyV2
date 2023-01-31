@@ -1,4 +1,4 @@
-#Passion Project: Song Society#
+Passion Project: Song Society
 
 
 About this application:
