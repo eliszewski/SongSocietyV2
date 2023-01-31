@@ -11,7 +11,7 @@ Posts:
 	A user will be able to make posts. Post should fill the purpose of the user to share songs, playlists, and any other music content they wish to share.
 
 Structure and Architecture: 
-3 Tier application with HTML and Reactjs for the front-end, Spring framework with Java for the middle or “service” layer, and MySQL for the backend and data persistence.
+3 Tier application with HTML and Angularjs for the front-end, Spring framework with Java for the middle or “service” layer, and MySQL for the backend and data persistence.
 
 MVP (Minimal Viable Product): 
 	The MVP for this application would include the following: the ability for users to create accounts and login, the ability for the user to create a profile page, a functional feed that displays posts from other accounts that the user follows.
