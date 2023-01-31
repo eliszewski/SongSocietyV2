@@ -3,7 +3,7 @@ Passion Project: Song Society
 
 About this application:
 	
-	A social media “twitter” like application for music listeners with integrated Spotify data leveraging the Spotify API. Website will contain a main "timeline" or feed for a user composed of posts. Website will also contain user profile pages that display a brief bio,statistics about the user's listening history, and other interests that they choose to display.
+A social media “twitter” like application for music listeners with integrated Spotify data leveraging the Spotify API. Website will contain a main "timeline" or feed for a user composed of posts. Website will also contain user profile pages that display a brief bio,statistics about the user's listening history, and other interests that they choose to display.
 Users:
 	Users will register with a name and password to login as well as have the option to link their Spotify account to their Society account. A user will also have the ability to follow other users and view their profiles.
 
